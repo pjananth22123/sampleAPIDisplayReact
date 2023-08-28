@@ -11,6 +11,8 @@ import ExpandableComponent from '../components/ExpandableComponent';
 function PrintTable(props){
     const [currentRow, setCurrentRow] = useState(null);
     const { columns,data } = props;
+    const paginationrows = 5;
+    const paginationRowsPerPageOptions = [5,10, 15, 20, 25, 30]
     createTheme('solarized', {
         text: {
           primary: '#0519f5',
@@ -42,6 +44,8 @@ function PrintTable(props){
                 theme="solarized"
                 fixedHeader
                 pagination
+                paginationPerPage={paginationrows}
+                paginationRowsPerPageOptions={paginationRowsPerPageOptions}
             >
             </DataTable>
         </div>
