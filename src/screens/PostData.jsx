@@ -13,15 +13,15 @@ function PrintTable(props){
     const { columns,data } = props;
     createTheme('solarized', {
         text: {
-          primary: '#268bd2',
-          secondary: '#2aa198',
+          primary: '#0519f5',
+          secondary: '#0519f5',
         },
         background: {
-          default: '#002b36',
+          default: 'white',
         },
         context: {
-          background: '#cb4b16',
-          text: '#FFFFFF',
+          background: 'white',
+          text: 'white',
         },
         divider: {
           default: '#073642',
@@ -52,47 +52,85 @@ function PostData(props) {
     // set states for cityCode and domain 
     const [cityCode, setCityCode] = useState('');
     const [domain, setDomain] = useState('');
+    const [country, setCountry] = useState('');
+    const [type, setType] = useState('');
+    const [subscriber_id,setSubscriberId] = useState('');
+
     const columns = [
         {
             name: 'Subscriber Id',
             selector: row => row.subscriber_id,
+            wrap: true
         },
         {
             name: 'Status',
-            selector: row => row.status
+            selector: row => row.status,
+            wrap: true
         },
         {
             name: 'UK Id',
-            selector: row => row.ukId
-            
+            selector: row => row.ukId,
+            wrap: true
         },
         {
             name: 'Subscriber URL',
-            selector: row => row.subscriber_url
+            selector: row => row.subscriber_url,
+            wrap: true
         },
         {
             name: 'Country',
-            selector: row => row.country
+            selector: row => row.country,
+            wrap: true
         },
         {
             name: 'Domain',
-            selector: row => row.domain
+            selector: row => row.domain,
+            wrap: true
         },
         {
             name: 'Valid From',
-            selector: row => row.valid_from
+            selector: row => row.valid_from,
+            wrap: true
         },
         {
             name: 'Valid Until',
-            selector: row => row.valid_until
+            selector: row => row.valid_until,
+            wrap: true
+        },
+        {
+            name: 'Sign Public Key',
+            selector: row => row.signing_public_key,
+            wrap: true
+        },
+        {
+            name: 'Encr Public Key',
+            selector: row => row.encr_public_key,
+            wrap: true
+        },
+        {
+            name: 'Created',
+            selector: row => row.created,
+            wrap: true
+        },
+        {
+            name: 'Updated',
+            selector: row => row.updated,
+            wrap: true
+        },
+        {
+            name: 'Br Id',
+            selector: row => row.br_id,
+            wrap: true
         },
         {
             name: 'Type',
-            selector: row => row.type
+            selector: row => row.type,
+            wrap: true
         },
         {
             name: 'City',
-            selector: row => row.city
+            selector: row => row.city,
+            wrap: true
         }
 
     ];
@@ -113,6 +151,11 @@ function PostData(props) {
         "valid_from":indResponses.valid_from,
         "valid_until":indResponses.valid_until,
         "type":indResponses.type,
+        "signing_public_key":indResponses.signing_public_key,
+        "encr_public_key":indResponses.encr_public_key,
+        "created":indResponses.created,
+        "updated":indResponses.updated,
+        "br_id":indResponses.br_id,
         "city":indResponses.city});
     })
     }
@@ -121,7 +164,7 @@ function PostData(props) {
     const submitHandler = (e) => {
         e.preventDefault();
         // signin action here
-        dispatch(getData(cityCode, domain));
+        dispatch(getData(cityCode, domain,country,type,subscriber_id));
     };
 
     return (
@@ -139,9 +182,7 @@ function PostData(props) {
                     <label htmlFor="cityCode">City Code: </label>
                     <input class="form-control form-control-sm" type="text" 
                         id="cityCode" 
-                        placeholder="Enter City Code" 
                         value={cityCode}
-                        required
                         onChange = {(e) => setCityCode(e.target.value)}
                     />
                 </div>
@@ -149,10 +190,32 @@ function PostData(props) {
                     <label htmlFor="domain">Domain: </label>
                     <input class="form-control form-control-sm" type="text" 
                         id="domain" 
-                        placeholder="Enter Domain" 
                         value={domain}
-                        required
                         onChange = {(e) => setDomain(e.target.value)}
+                    />
+                </div>
+                <div class="form-group col-md-2">
+                    <label htmlFor="type">Type: </label>
+                    <input class="form-control form-control-sm" type="text" 
+                        id="type" 
+                        value={type}
+                        onChange = {(e) => setType(e.target.value)}
+                    />
+                </div>
+                <div class="form-group col-md-2">
+                    <label htmlFor="Country">Country: </label>
+                    <input class="form-control form-control-sm" type="text" 
+                        id="country" 
+                        value={country}
+                        onChange = {(e) => setCountry(e.target.value)}
+                    />
+                </div>
+                <div class="form-group col-md-2">
+                    <label htmlFor="Subscriber_id">Subscriber Id: </label>
+                    <input class="form-control form-control-sm" type="text" 
+                        id="subscriber_id" 
+                        value={subscriber_id}
+                        onChange = {(e) => setSubscriberId(e.target.value)}
                     />
                 </div>
                 </div>
@@ -164,7 +227,6 @@ function PostData(props) {
             <div>
             {!(responseData===undefined)&&<>{ <PrintTable columns={columns} data={data} />}</>}
             </div>
-            <Footer/>
         </div>
     );
 }

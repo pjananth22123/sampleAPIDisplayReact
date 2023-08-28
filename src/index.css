@@ -12,3 +12,9 @@ code {
     monospace;
 }
 
+
+.rdt_TableHeader {
+      font-size: 20px;
+      font-weight: bold;
+      justify-content: center;
+}
