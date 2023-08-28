@@ -8,7 +8,9 @@ export const getData = (cityCode, domain) => async (dispatch) => {
 
     try{
         // use axios for http post request when user REGISTERg in 
-        const { data } = await axios.get('https://api.dictionaryapi.dev/api/v2/entries/en/hello', { cityCode, domain});
+        //const { data } = await axios.get('https://api.dictionaryapi.dev/api/v2/entries/en/hello', { cityCode, domain});
+        //const { data } = await axios.get('http://localhost:3030/output');
+        const { data } = await axios.get('http://34.93.242.206/registry/lookup', { cityCode, domain})
         // if success, dispatch success and set payload to data 
         dispatch({ type: USER_REQUEST_SUCCESS, payload:  data });
         //also dispatch SignIn_Success because userSignin.userInfo is what we use to valid user

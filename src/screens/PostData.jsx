@@ -6,8 +6,10 @@ import MessageBox from '../components/MessageBox';
 import DataTable,{createTheme} from 'react-data-table-component';
 import Header from '../screens/Header';
 import Footer from '../screens/Footer';
+import ExpandableComponent from '../components/ExpandableComponent';
 
 function PrintTable(props){
+    const [currentRow, setCurrentRow] = useState(null);
     const { columns,data } = props;
     createTheme('solarized', {
         text: {
@@ -33,12 +35,8 @@ function PrintTable(props){
 
     return(
         <div>
-            <nav class="navbar bg-body-tertiary">
-                <div class="container-fluid">
-                    <span class="navbar-brand mb-0 h1">Result</span>
-                </div>
-            </nav>
             <DataTable
+                title="API Result"
                 columns={columns}
                 data={data}
                 theme="solarized"
@@ -56,18 +54,47 @@ function PostData(props) {
     const [domain, setDomain] = useState('');
     const columns = [
         {
-            name: 'Audio URL',
-            selector: row => row.audioUrl,
+            name: 'Subscriber Id',
+            selector: row => row.subscriber_id,
         },
         {
-            name: 'Source URL',
-            selector: row => row.sourceUrl
+            name: 'Status',
+            selector: row => row.status
         },
         {
-            name: 'Text',
-            selector: row => row.text
+            name: 'UK Id',
+            selector: row => row.ukId
             
+        },
+        {
+            name: 'Subscriber URL',
+            selector: row => row.subscriber_url
+        },
+        {
+            name: 'Country',
+            selector: row => row.country
+        },
+        {
+            name: 'Domain',
+            selector: row => row.domain
+        },
+        {
+            name: 'Valid From',
+            selector: row => row.valid_from
+        },
+        {
+            name: 'Valid Until',
+            selector: row => row.valid_until
+        },
+        {
+            name: 'Type',
+            selector: row => row.type
+        },
+        {
+            name: 'City',
+            selector: row => row.city
         }
+
     ];
     const data = [];
     const dispatch = useDispatch();
@@ -75,12 +102,18 @@ function PostData(props) {
     const responses = useSelector(state => state.getData);
     const { responseData, loading, error } = responses;
     if(!(responseData === undefined)) {
-    console.log("Response Data",responseData[0].phonetics);
-    const phoneticsData = responseData[0].phonetics;
-    phoneticsData.map(indPhoneticsData => {
-        data.push({"audioUrl":indPhoneticsData.audio,
-        "sourceUrl":indPhoneticsData.sourceUrl,
-        "text":indPhoneticsData.text});
+    console.log("Response Data",responseData);
+    responseData.map(indResponses => {
+        data.push({"subscriber_id":indResponses.subscriber_id,
+        "status":indResponses.status,
+        "ukId":indResponses.ukId,
+        "subscriber_url":indResponses.subscriber_url,
+        "country":indResponses.country,
+        "domain":indResponses.domain,
+        "valid_from":indResponses.valid_from,
+        "valid_until":indResponses.valid_until,
+        "type":indResponses.type,
+        "city":indResponses.city});
     })
     }
 
